@@ -1,4 +1,6 @@
 #Connecting to an API using python
+#Author : Sriniketh M
+#Date: 09-20-2025
 
 import requests
 

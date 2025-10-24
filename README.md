@@ -36,7 +36,7 @@ The main goal is to demonstrate how to:
  ### 2. Navigate to the project directory
 ```
  cd pokemon-api
-````
+```
 
  ### 3. Install the required packages
 ```

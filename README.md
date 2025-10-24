@@ -23,5 +23,19 @@ The main goal is to demonstrate how to:
 | **Language**               | Python 3.x                                                               |
 | **IDE**                    | Visual Studio Code                                                       |
 | **API Source**             | [PokéAPI](https://pokeapi.co/)                                           |
-| **Core Libraries**         | `requests`, `pandas`, `json`                                             |
+| **Core Libraries**         | `requests`, `pandas`                                                     |
 | **Version Control**        | Git + GitHub                                                             |
+
+## Getting Started
+
+### 1. Clone the repository to your local 
+ git clone https://github.com/niketh91/Pokemon-API.git
+
+ ### 2. Navigate to the project directory
+ cd pokemon-api
+
+ ### 3. Install the required packages
+pip install -r requirements.txt
+
+### 4. Run the main pipeline file and the data will be saved as CSV files
+python main.py

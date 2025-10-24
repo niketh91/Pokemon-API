@@ -1,14 +1,8 @@
-#Connecting to Poke API using python
-#Author : Sriniketh M
-#Date: 09-20-2025
-
 import requests
 
-def get_pokemon_names(limit):
+def fetch_pokemon_names(limit=400):
 
     url_base = "https://pokeapi.co/api/v2/"
-
-    #limit = 100 #default is 20
 
     url = f"{url_base}pokemon/?limit={limit}"
 
@@ -23,24 +17,19 @@ def get_pokemon_names(limit):
             response.raise_for_status() #Raises HTTP error if any
             data = response.json()
 
-            pokemon_list = data['results'] #this has names and url for each pokemon
-
-            for pokemon in pokemon_list:
-                poke = (pokemon['name'])
-                pokemon_names.append(poke)
+            for pokemon in data['results']:
+                pokemon_names.append(pokemon['name'])
 
             url = data['next']
             page +=1
         
         except requests.exceptions.RequestException as e:
             print(f"Request failed with error: {e}")
+            break
 
+    print(f"Retrieved {len(pokemon_names)} Pokémon names.")
     return pokemon_names
 
-# pokemon_name = "pikachu" #pokemon_name -> argument
-
-# pokemon_info = get_pokemon_info(pokemon_name) #parameters can be named different from the arguements
-
-# if pokemon_info:
-#     print(f"Pokemon name is {pokemon_info['name']}")
-#     print(f"Pokemon experience is {pokemon_info['base_experience']}")
+if __name__ == "__main__":
+    # Optional: run this file alone for testing
+    fetch_pokemon_names(50)

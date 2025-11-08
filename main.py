@@ -3,9 +3,21 @@
 # Author: Sriniketh M
 
 import os
+import pandas as pd
 from src.pokemoninfoapi import fetch_pokemon_info
 from src.pokemonabilities import fetch_ability_data
 from src.pokemonspecies import fetch_species_data
+from adls_utils import upload_to_adls
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+#Azure Credentials
+ACCOUNT_NAME = os.getenv("AZURE_STORAGE_ACCOUNT_NAME")
+ACCOUNT_KEY = os.getenv("AZURE_STORAGE_ACCOUNT_KEY")
+CONTAINER_NAME = os.getenv("CONTAINER")
+FOLDER_NAME = os.getenv("FOLDER")
 
 def main():
     print(f"Starting Pokemon Data Pipeline...\n")
@@ -50,6 +62,32 @@ def main():
     species_df.to_csv("data/species.csv", index= False)
 
     print(f"Data pipeline successfully completed. Files saved in data folder!")
+
+    #All CSVs saved locally
+    csv_files = [
+        "pokemon.csv",
+        "pokemon_ability.csv",
+        "pokemon_type.csv",
+        "pokemon_stats.csv",
+        "type.csv",
+        "ability.csv",
+        "species.csv",
+    ]
+
+    #Loading each file to ADLS
+    print(f"Loading all files to ADLS (landing folder)...")
+    for csv in csv_files:
+        df_path = os.path.join("data", csv)
+        df = pd.read_csv(df_path)
+
+        upload_to_adls(
+            account_name=  ACCOUNT_NAME,
+            account_key= ACCOUNT_KEY,
+            container_name= CONTAINER_NAME,
+            folder_name= FOLDER_NAME,
+            df = df,
+            file_name= csv
+    )
 
 if __name__ == "__main__":
     main()

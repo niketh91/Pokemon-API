@@ -47,3 +47,27 @@ pip install -r requirements.txt
 ```
 python main.py
 ```
+
+## Loading CSV files to Azure Data Lake Storage (ADLS)
+Once the Pokémon data pipeline has successfully generated all CSV files in the data/ folder, you can upload them directly to Azure Data Lake Storage (ADLS) using the built-in upload function. This step moves your data into the landing/bronze layer for further processing in Databricks.
+
+Steps:
+
+1. Ensure your .env file contains the correct Azure credentials:
+```
+AZURE_STORAGE_ACCOUNT_NAME=<your_storage_account_name>
+AZURE_STORAGE_ACCOUNT_KEY=<your_account_key>
+CONTAINER=<your_container_name>
+FOLDER=<your_folder_name>  # e.g., landing or bronze
+```
+
+2. Run the following command from your project’s main directory to upload all CSV files in the data/ folder:
+```
+python -c "from main import upload_all_to_adls; upload_all_to_adls()"
+```
+
+3. Each CSV will be automatically uploaded to your specified container and folder in ADLS.
+
+Note:
+- This command only uploads existing CSVs; it does not re-run the API data extraction process.
+- If any file is missing in the data/ folder, it will be skipped gracefully.

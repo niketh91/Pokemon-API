@@ -1,12 +1,12 @@
-from pyspark import SparkSession
+#from pyspark import SparkSession
 import os
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
 
-#Create spark session
-spark = SparkSession.builder.appName("bronze_schema").getOrCreate()
+#Create spark session if running locally. Comment if running in Databricks
+#spark = SparkSession.builder.appName("bronze_schema").getOrCreate()
 
 #Azure Credentials
 ACCOUNT_NAME = os.getenv("AZURE_STORAGE_ACCOUNT_NAME")
